@@ -3,15 +3,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { Header } from "@/components/header";
 import { Spinner } from "@/components/ui/spinner";
 import { ChevronLeft } from "lucide-react";
 import { experienceService } from "@/services/api";
 import type { Experience, Slot } from "@/types";
 
-export default function ExperiencePage({ params }: { params: { id: string } }) {
+export default function ExperiencePage() {
   const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
   const [experience, setExperience] = useState<Experience | null>(null);
   const [slots, setSlots] = useState<Slot[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +25,7 @@ export default function ExperiencePage({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await experienceService.getById(params.id);
+        const data = await experienceService.getById(id);
         setExperience(data.experience);
         setSlots(data.slots);
         
@@ -41,7 +43,7 @@ export default function ExperiencePage({ params }: { params: { id: string } }) {
     };
 
     fetchData();
-  }, [params.id]);
+  }, [id]);
 
   if (loading) {
     return (
