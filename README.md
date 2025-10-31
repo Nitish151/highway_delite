@@ -2,7 +2,7 @@
 
 A modern, full-stack web application for booking adventure experiences with real-time slot management, promo codes, and seamless checkout flow.
 
-**Live Demo:** [Frontend URL] | [Backend API URL]
+**Live Demo:** [https://highway-delite-5ki1lop66-nitish-sharmas-projects-eb97a2a1.vercel.app/]
 
 ![Highway Delite](https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200&h=300&fit=crop)
 
