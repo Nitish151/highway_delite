@@ -25,6 +25,42 @@ app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
 
+// Seed endpoint (for production database initialization)
+app.get('/api/seed', async (req, res) => {
+  try {
+    const { PrismaClient } = await import('@prisma/client');
+    const prisma = new PrismaClient();
+    
+    // Check if already seeded
+    const count = await prisma.experience.count();
+    if (count > 0) {
+      return res.json({ 
+        success: false, 
+        message: 'Database already seeded',
+        experienceCount: count 
+      });
+    }
+
+    // Import and run seed file directly
+    const { execSync } = await import('child_process');
+    execSync('npx ts-node src/seed.ts', { cwd: __dirname + '/..' });
+    
+    const newCount = await prisma.experience.count();
+    await prisma.$disconnect();
+    
+    res.json({ 
+      success: true, 
+      message: 'Database seeded successfully!',
+      experienceCount: newCount 
+    });
+  } catch (error: any) {
+    res.status(500).json({ 
+      success: false, 
+      error: error.message 
+    });
+  }
+});
+
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err.stack);
