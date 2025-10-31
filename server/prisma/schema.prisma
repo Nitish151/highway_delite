@@ -1,0 +1,70 @@
+// This is your Prisma schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Experience {
+  id              String    @id @default(uuid())
+  title           String
+  location        String
+  image           String
+  price           Int
+  description     String
+  fullDescription String?
+  about           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  slots           Slot[]
+  bookings        Booking[]
+}
+
+model Slot {
+  id             String      @id @default(uuid())
+  experienceId   String
+  date           String
+  time           String
+  availableSpots Int
+  totalSpots     Int
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  experience     Experience  @relation(fields: [experienceId], references: [id], onDelete: Cascade)
+  bookings       Booking[]
+
+  @@unique([experienceId, date, time])
+}
+
+model Booking {
+  id           String     @id @default(uuid())
+  experienceId String
+  slotId       String
+  fullName     String
+  email        String
+  quantity     Int
+  promoCode    String?
+  subtotal     Int
+  discount     Int        @default(0)
+  taxes        Int
+  total        Int
+  status       String     @default("confirmed")
+  referenceId  String     @unique
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  experience   Experience @relation(fields: [experienceId], references: [id])
+  slot         Slot       @relation(fields: [slotId], references: [id])
+}
+
+model PromoCode {
+  id        String   @id @default(uuid())
+  code      String   @unique
+  discount  Int
+  type      String   // "percentage" or "fixed"
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
