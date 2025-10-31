@@ -88,7 +88,7 @@ Make sure you have these installed:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Nitish151/highway_delite.git
 cd highway_delite
 ```
 
@@ -415,72 +415,6 @@ npm run build
 npm start
 ```
 
-## 🌐 Deployment Guide
-
-### Option 1: Vercel (Frontend) + Render (Backend)
-
-#### Deploy Backend to Render
-
-1. **Create account** at [render.com](https://render.com)
-2. **New Web Service** → Connect GitHub repo
-3. **Settings:**
-   - **Root Directory:** `server`
-   - **Build Command:** `npm install && npx prisma generate && npx prisma migrate deploy && npm run build`
-   - **Start Command:** `npm start`
-   - **Environment Variables:**
-     ```
-     NODE_ENV=production
-     PORT=5000
-     DATABASE_URL=file:./prod.db
-     ```
-4. **Deploy** - Copy your backend URL (e.g., `https://your-app.onrender.com`)
-
-#### Deploy Frontend to Vercel
-
-1. **Create account** at [vercel.com](https://vercel.com)
-2. **Import Project** → Connect GitHub repo
-3. **Settings:**
-   - **Root Directory:** `client`
-   - **Framework:** Next.js
-   - **Environment Variables:**
-     ```
-     NEXT_PUBLIC_API_URL=https://your-app.onrender.com/api
-     ```
-4. **Deploy** - Your frontend URL: `https://your-app.vercel.app`
-
-### Option 2: Railway (Both Frontend & Backend)
-
-1. **Create account** at [railway.app](https://railway.app)
-2. **New Project** → Deploy from GitHub
-3. Railway auto-detects and deploys both services
-4. Set environment variables as above
-
-### Option 3: AWS EC2 (Production)
-
-```bash
-# On EC2 instance
-git clone <repo>
-cd highway_delite
-
-# Backend
-cd server
-npm install --production
-npx prisma generate
-npx prisma migrate deploy
-npm run seed
-pm2 start dist/index.js --name api
-
-# Frontend
-cd ../client
-npm install --production
-npm run build
-pm2 start npm --name web -- start
-
-# Nginx reverse proxy
-sudo nano /etc/nginx/sites-available/default
-# Configure ports 5000 (backend) and 3000 (frontend)
-```
-
 ### After Deployment
 
 1. **Test API:** Visit `https://your-backend-url/api/experiences`
@@ -501,38 +435,6 @@ NODE_ENV=development
 PORT=5000
 DATABASE_URL="file:./dev.db"
 ```
-
-## 📝 Development Notes
-
-### Key Features Implemented
-- ✅ Complete booking flow from browsing to confirmation
-- ✅ Dynamic slot availability management
-- ✅ Promo code system with percentage and fixed discounts
-- ✅ Automatic reference ID generation
-- ✅ Real-time slot updates after booking
-- ✅ Comprehensive error handling
-- ✅ TypeScript for type safety
-- ✅ Clean code architecture
-
-### Code Quality
-- TypeScript for type safety
-- Modular component structure
-- Separation of concerns (routes, controllers, services)
-- Error handling middleware
-- Input validation
-- Clean and maintainable code
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
-## 📄 License
-
-MIT License - feel free to use this project for learning and development.
 
 ## � Available Scripts
 
@@ -563,26 +465,6 @@ npm run lint       # Run ESLint
 ✅ **Error Handling:** Comprehensive error management  
 ✅ **Responsive:** Mobile-first design  
 
-## �👨‍💻 Author
-
-**[Your Name]**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
-- Assignment: Highway Delite Fullstack Intern
-
-## 🙏 Acknowledgments
-
-- **Highway Delite** - For the internship opportunity
-- **Figma Design** - UI/UX specifications
-- Images from [Unsplash](https://unsplash.com)
-- Icons from [Lucide](https://lucide.dev)
-- UI Components inspired by [shadcn/ui](https://ui.shadcn.com)
-
-## 📄 License
-
-This project is created for the Highway Delite internship assignment.
-
----
 
 ## ⭐ Important Notes
 
@@ -592,8 +474,3 @@ This project is created for the Highway Delite internship assignment.
 4. **Port conflicts** - Make sure ports 3000 and 5000 are available
 5. **Node version** - Use Node.js v18 or higher
 
----
-
-**Built with ❤️ for Highway Delite Fullstack Internship Assignment**
-
-**Last Updated:** October 31, 2025
