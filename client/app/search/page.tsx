@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/header";
 import { ExperienceCard } from "@/components/experience-card";
@@ -8,7 +8,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { experienceService } from "@/services/api";
 import type { Experience } from "@/types";
 
-export default function SearchPage() {
+function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
   
@@ -113,5 +113,20 @@ export default function SearchPage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="flex justify-center items-center min-h-[400px]">
+          <Spinner size="lg" />
+        </div>
+      </div>
+    }>
+      <SearchResults />
+    </Suspense>
   );
 }
