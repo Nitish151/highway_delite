@@ -16,6 +16,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  experimental: {
+    clientRouterFilter: true,
+  },
 };
 
 export default nextConfig;
